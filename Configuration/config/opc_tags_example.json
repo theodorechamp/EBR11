@@ -1,0 +1,44 @@
+{
+    "trigger_tags" : [
+        {
+            "start_batch" : {
+                "type": "boolean",
+                "tag_name": "start_batch",
+                "special_case": "start_batch_trigger"
+            }
+        },
+        {
+            "end_batch" : {
+                "type": "boolean",
+                "tag_name": "end_batch",
+                "special_case": "end_batch_trigger"
+            }
+        }
+    ],
+
+    "parameter_tags" : [
+        {
+            "HE100 Readout" : {
+                "type" : "real",
+                "tag_name": "HE100_readout",
+                "recording_config" : {
+                    "trigger_based" : true,
+                    "trigger_tag"   : "end_step"
+                 }
+            }
+        },
+        {
+            "HE100 Enabled" : {
+                "type": "real",
+                "tag_name": "HE100_enabled",
+                "recording_config" : {
+                    "trigger_based" : true,
+                    "trigger_tag"   : "end_step"
+                }
+
+            }
+        }
+    ]
+
+
+}

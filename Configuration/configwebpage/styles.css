@@ -1,0 +1,13 @@
+.output-container textarea {
+    display: block;
+    width: 1000px;
+    max-width: 100%;
+    box-sizing: border-box;
+    margin-inline: auto;
+    resize: vertical;
+}
+
+.output-container {
+    justify-self: center;
+    max-width: 1010px;
+}
