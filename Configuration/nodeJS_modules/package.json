@@ -9,7 +9,9 @@
   "dependencies": {
     "dotenv": "^16.4.7",
     "express": "^4.22.3",
+    "node-opcua": "^2.187.3",
     "pg": "^8.23.1",
+    "typescript": "^7.0.2",
     "winston": "^3.17.0"
   }
 }

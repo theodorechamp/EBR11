@@ -27,10 +27,26 @@ async function requestGenerateTables(){
     } catch (e) { 
         console.error(`Error sending data: ${e}`);
     }
-
-
-
 }
 
+async function requestCheckStatus() {
+    try {
+        const response = await fetch(`http://${NODE_IPADDRESS}:${NODE_PORT}/api/v1/health`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP Error. Status: ${response.status}`);
+        }
+        const result = await response.json();
+        console.log(result);
+    } catch (e) {
+        console.error(`Error checking status: ${e}`);
+    }
+}
 
 document.getElementById('btnGenerateTables').addEventListener('click', requestGenerateTables);
+document.getElementById('btnCheckStatus').addEventListener('click', requestCheckStatus);
