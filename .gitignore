@@ -1,0 +1,77 @@
+# -------------------------------------------------------------------
+# Dependencies (Never commit these; they are fetched via package manager)
+# -------------------------------------------------------------------
+node_modules/
+jspm_packages/
+web_modules/
+.pnpm-store/
+
+# -------------------------------------------------------------------
+# Environment Variables & Secrets (Crucial for security)
+# -------------------------------------------------------------------
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.pem
+
+# -------------------------------------------------------------------
+# Logs and Diagnostics
+# -------------------------------------------------------------------
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# -------------------------------------------------------------------
+# Testing & Coverage Outputs
+# -------------------------------------------------------------------
+coverage/
+*.lcov
+.nyc_output
+
+# -------------------------------------------------------------------
+# Build & Production Outputs
+# -------------------------------------------------------------------
+dist/
+build/
+out/
+.next/
+.nuxt/
+.output/
+
+# -------------------------------------------------------------------
+# Tooling Caches & Local History
+# -------------------------------------------------------------------
+.npm
+.eslintcache
+.stylelintcache
+.cache
+.parcel-cache
+.turbo
+*.tsbuildinfo
+.node_repl_history
+
+# -------------------------------------------------------------------
+# Operating System & IDE Files (Optional but highly recommended)
+# -------------------------------------------------------------------
+# macOS
+.DS_Store
+._*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+
+# IDEs (VS Code / WebStorm)
+.vscode/
+!.vscode/extensions.json
+.idea/
+*.iml
