@@ -51,7 +51,7 @@ abstract class abstractTag {
         return this.measurementTriggerTag;
     }
 
-    abstract async getValueFromClient(client: OPCUAClient, nodeId: string): Promise<any>;
+    abstract getValueFromClient(client: OPCUAClient, nodeId: string): Promise<any>;
     
     
 }
@@ -70,8 +70,8 @@ class booleanTag extends abstractTag {
         this.options = options;
     }
 
-    async getValueFromClient(client: OPCUAClient, nodeId: string): Promise<string> {
-        return '';
+    getValueFromClient(client: OPCUAClient, nodeId: string): Promise<boolean> {
+        return Promise.resolve(false);
     }
 }
 
@@ -89,13 +89,13 @@ class stringTag extends abstractTag {
     }
 
     async getValueFromClient(client: OPCUAClient, nodeId: string): Promise<string> {
-        return '';
+        return Promise.resolve("");
     }
 
 
 }
 
-interface numberTag extends abstractTag {
+class numberTag extends abstractTag {
     defaultValue: number;
 
     constructor(name: string, 
@@ -108,11 +108,7 @@ interface numberTag extends abstractTag {
         this.options = options;
     }
 
-    async getValueFromClient(client: OPCUAClient, nodeId: string): Promise<string> {
-        return '';
+    async getValueFromClient(client: OPCUAClient, nodeId: string): Promise<number> {
+        return Promise.resolve(0);
     }
-}
-
-class TagManager {
-
 }

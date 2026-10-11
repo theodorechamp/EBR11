@@ -2,9 +2,10 @@
   "name": "ebr11-node-modules",
   "version": "1.0.0",
   "private": true,
-  "main": "main.js",
+  "main": "bootstrap.js",
+  "type":"module",
   "scripts": {
-    "start": "node main.js"
+    "start": "node bootstrap.js"
   },
   "dependencies": {
     "dotenv": "^16.4.7",
