@@ -1,17 +1,12 @@
 import { OPCUAClient, AttributeIds, DataType } from "node-opcua";
 
 abstract class abstractTag {
-    //name: string;
-    //description: string;
-    //type: string;
     defaultValue: any;
     options?: any[];
-    //measurementTriggerTag: booleanTag;
 
     constructor(    public name: string, 
                     public description: string, 
-                    public type: string, 
-                    public measurementTriggerTag: booleanTag) {
+                    public type: string) {
 
     }
 
@@ -47,25 +42,44 @@ abstract class abstractTag {
         return this.options;
     }
 
-    public getMeasurementTriggerTag(): booleanTag {
-        return this.measurementTriggerTag;
-    }
-
     abstract getValueFromClient(client: OPCUAClient, nodeId: string): Promise<any>;
     
     
 }
 
-class booleanTag extends abstractTag {
+class triggerTag extends abstractTag {
+    constructor(name: string, 
+                description: string) {
+        super(name, description, 'trigger');
+    }
+
+    getValueFromClient(client: OPCUAClient, nodeId: string): Promise<boolean> {
+        return Promise.resolve(false);
+    }
+}
+
+abstract class abstractMeasurementTag extends abstractTag {
+    triggerTag: booleanTag;
+
+    constructor(name: string, 
+                description: string, 
+                type: string,
+                triggerTag: booleanTag) {
+        super(name, description, type);
+        this.triggerTag = triggerTag;
+    }
+}
+
+class booleanTag extends abstractMeasurementTag {
 
     defaultValue: boolean;
 
     constructor(name: string, 
                 description: string, 
                 defaultValue: boolean, 
-                measurementTriggerTag: booleanTag, 
+                triggerTag: booleanTag, 
                 options?: any[]) {
-        super(name, description, 'boolean', measurementTriggerTag);
+        super(name, description, 'boolean', triggerTag);
         this.defaultValue = defaultValue;
         this.options = options;
     }
@@ -75,15 +89,15 @@ class booleanTag extends abstractTag {
     }
 }
 
-class stringTag extends abstractTag {
+class stringTag extends abstractMeasurementTag {
     defaultValue: string;
 
     constructor(name: string, 
                 description: string, 
                 defaultValue: string, 
-                measurementTriggerTag: booleanTag, 
+                triggerTag: booleanTag, 
                 options?: any[]) {
-        super(name, description, 'string', measurementTriggerTag);
+        super(name, description, 'string', triggerTag);
         this.defaultValue = defaultValue;
         this.options = options;
     }
@@ -95,20 +109,42 @@ class stringTag extends abstractTag {
 
 }
 
-class numberTag extends abstractTag {
+class numberTag extends abstractMeasurementTag {
     defaultValue: number;
 
     constructor(name: string, 
                 description: string, 
                 defaultValue: number, 
-                measurementTriggerTag: booleanTag, 
+                triggerTag: booleanTag, 
                 options?: any[]) {
-        super(name, description, 'number', measurementTriggerTag);
+        super(name, description, 'number', triggerTag);
         this.defaultValue = defaultValue;
         this.options = options;
     }
 
     async getValueFromClient(client: OPCUAClient, nodeId: string): Promise<number> {
         return Promise.resolve(0);
+    }
+}
+
+class TagFactory {
+    static createTag(name: string, 
+                     description: string,
+                     type: string, 
+                     defaultValue: any, 
+                     myTriggerTag: booleanTag, 
+                     options?: any[]) {
+        switch (type) {
+            case 'boolean':
+                return new booleanTag(name, description, defaultValue, myTriggerTag, options);
+            case 'string':
+                return new stringTag(name, description, defaultValue, myTriggerTag, options);
+            case 'number':
+                return new numberTag(name, description, defaultValue, myTriggerTag, options);
+            case 'trigger':
+                return new triggerTag(name, description);
+            default:
+                throw new Error(`Unsupported tag type: ${type}`);
+        }
     }
 }
