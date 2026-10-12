@@ -1,5 +1,17 @@
 {
+  "name": "operation",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "theodorechamp",
+  "type": "module",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "dependencies": {
-    "node-opcua": "^2.182.2"
+    "node-opcua": "^2.182.2",
+    "pg": "^8.23.1",
+    "yocto-queue": "^1.2.2"
   }
 }
