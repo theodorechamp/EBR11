@@ -1,0 +1,19 @@
+{
+  "name": "testing",
+  "version": "1.0.0",
+  "description": "Testing package for configuration and operation modules",
+  "main": "bootstrap_testing.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start_testing_server": "node bootstrap_testing.js"
+  },
+  "author": "theodorechamp",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^18.0.8",
+    "node-opcua": "^2.182.2",
+    "os": "^0.1.2",
+    "winston": "^3.19.0"
+  }
+}
