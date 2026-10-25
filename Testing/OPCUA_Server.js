@@ -11,11 +11,18 @@ await server.initialize();
 logger.info("Server has been initialized");
 
 const addressSpace = server.engine.addressSpace;
+console.log(`AddressSpace = ${addressSpace}`);
 const namespace = addressSpace.getOwnNamespace();
+console.log(`Namespace = ${namespace}`);
 
 const device = namespace.addObject({
    organizedBy: addressSpace.rootFolder.objects,
    browseName: "MyDevice" 
+});
+
+const serverDevice = namespace.addObject({
+    organizedBy: addressSpace.rootFolder.objects,
+    browseName: "ServerDevice" 
 });
 
 let variable1 = 1;
@@ -23,6 +30,7 @@ let variable1 = 1;
 // emulate variable1 changing every 500 ms
 setInterval(() => {  variable1+=1; }, 500);
 
+//Add MyVariable1
 namespace.addVariable({
     componentOf: device,
     browseName: "MyVariable1",
@@ -35,6 +43,7 @@ namespace.addVariable({
 
 let variable2 = 10.0;
 
+//Add MyVariable2
 namespace.addVariable({
     componentOf: device,
     nodeId: "ns=1;b=1020FFAA",
@@ -49,6 +58,21 @@ namespace.addVariable({
         }
     }
 })
+
+let serverHelloWorld = `Hello from OPC UA server!`;
+
+const serverHealthCheck = namespace.addVariable({
+    componentOf: serverDevice,
+    nodeId: "ns=1;i=1003",
+    browseName: "ServerHealthCheck",
+    dataType: "String",
+    minimumSamplingInterval: 1000,
+    value: {
+        get: () => new Variant({dataType: DataType.String, value: serverHelloWorld})
+    }
+});
+
+console.log(serverHealthCheck);
 
 import os from "os";
 
