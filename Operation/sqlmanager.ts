@@ -1,4 +1,4 @@
-import { Pool } from 'pg';
+import Pool from 'pg';
 import queue from 'yocto-queue';
 
 type query = {
@@ -12,7 +12,7 @@ class SQLManager{
     user: string;
     password: string;
     database: string;
-    pool: Pool;
+    pool: Pool.Pool;
     currentBatchId: number;
     queryQueue: queue<query>;
 
@@ -41,6 +41,16 @@ class SQLManager{
 
     disconnect() {
         return this.pool.end();
+    }
+
+    checkConnection() {
+        try {
+            this.pool.query('SELECT 1');
+             this.pool.query('SELECT NOW()');
+        } catch (error) {
+            console.error(`Error checking connection:`, error);
+            throw error;
+        }
     }
 
     genericQuery(query: string, params?: any[]) {

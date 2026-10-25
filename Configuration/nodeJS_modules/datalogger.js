@@ -28,4 +28,5 @@ const logger = winston.createLogger({
 	transports
 });
 
+console.log(`Logger initialized with level: ${logger.level}`);
 export { logger };

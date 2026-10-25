@@ -4,31 +4,27 @@ import { OPCUAClient, AttributeIds, StatusCode } from "node-opcua";
 import { logger } from "./datalogger.js";
 
 //const endpointUrl = "opc.tcp://opcuademo.sterfive.com:26543";
-const endpointUrl = "opc.tcp://DESKTOP:4334/UA/MyLittleServer";
+const endpointUrl = "opc.tcp://localhost:4334/UA/MyLittleServer";
 const client = OPCUAClient.create({ endpointMustExist: false });
 
 await client.withSessionAsync(endpointUrl, async (session) => {
 	logger.info('Checking OPCUA session...')
 	
-	const dataValue = await session.read({
-		nodeId: "ns=1;i=1003",
-		attributeId: AttributeIds.Value
-	});
 
-	console.log(dataValue.statusCode.toString(), dataValue.value.value);
-
-	let i = 85;
-	console.log(`i = ${i}`);
+	const i = 85;
 	const objects = await session.browse({ includeSubtypes: true,nodeId: `i=${i}`, resultMask: 0x3f }); // ObjectsFolder
 
-	console.log(objects);
+	//console.log(objects);
 	console.table(objects.references.map((ref) => ({
 		browseName: `${ref.browseName.namespaceIndex}:${ref.browseName.name}`,
 		nodeId: ref.nodeId.toString()
 	})));
 	
+	
+	
+
+	//Get ServerDevice and browse children
 	const deviceName = "ServerDevice";
-	const variableName = "ServerHealthCheck";
 	const device = objects.references.find(
 		(ref) => ref.browseName.name === deviceName
 	);
@@ -37,13 +33,15 @@ await client.withSessionAsync(endpointUrl, async (session) => {
 		throw new Error(`Device ${deviceName} was not found`);
 	}
 
-	const children = await session.browse({ nodeId: device.nodeId });
+
+	const children = await session.browse({includeSubtypes: true, nodeId: device.nodeId,  resultMask: 0x3f });
 	console.table(children.references.map((ref) => ({
 		browseName: `${ref.browseName.namespaceIndex}:${ref.browseName.name}`,
 		nodeId: ref.nodeId.toString()
 	})));
-	/*
-	const children = await session.browse({ nodeId: device.nodeId });
+
+	//Get ServerHealthCheck variable
+	const variableName = "ServerHealthCheck";
 	const variable = children.references.find(
 		(ref) => ref.browseName.name === variableName
 	);
@@ -51,24 +49,19 @@ await client.withSessionAsync(endpointUrl, async (session) => {
 	if (!variable){
 		throw new Error(`Variable ${variableName} was not found`)
 	}
-
 	const dataValue = await session.read({
 		nodeId: variable.nodeId,
 		attributeId: AttributeIds.Value
 	});
-  /*const dataValue = await session.read({
-    browseName: "ServerHealthCheck",
-    attributeId: AttributeIds.Value
-  }); */
-  //console.log("Server time:", dataValue.value.value);
+	
 
-  /*if(dataValue.statusCode.isGood()){
+	if(dataValue.statusCode.isGood()){
+		logger.info('OPCUA session validated.');
+		logger.verbose(`Value pulled: ${dataValue.value.value}`);
+	} else{
+		logger.error('Could not validate OPCUA session, returning error: ', { message: dataValue.statusCode.toString() });
+	}
 
-	logger.info('OPCUA session validated.');
-	logger.info(`Value pulled: ${dataValue.value.value}`);
-  } else{
-	logger.error(`OPC UA read failed: ${dataValue.statusCode.toString()}`);
-  } */
 });
 
 const app = express();
