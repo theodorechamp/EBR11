@@ -3,10 +3,32 @@
     <style>
         body { font-family: Arial, sans-serif; padding: 20px; }
         h1 { color: #333; }
+        table {
+            border-collapse: collapse; 
+        } 
+        th, td {
+        border: 1px solid #333333; /* 1px thick, solid line, dark gray */
+        padding: 8px;              /* Adds inner spacing for readability */
+        text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2; /* Gives headers a distinct look */
+        }
+        
     </style>
     </head>
     <body>
-    <h1>Invoice #1024</h1>
-    <p>Thank you for your business!</p>
+        <h1 id="documentHeader"></h1>
+        <table>
+            <tr>
+                <td> Run Name </td>
+                <td id="runName"> </td>
+            </tr>
+            <tr>
+                <td> Run Date </td>
+                <td id="runDate"> </td>
+            </tr>
+        </table>
     </body>
 </html>

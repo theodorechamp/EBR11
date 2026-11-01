@@ -1,0 +1,16 @@
+{
+    "headerData" : [
+        {
+            "ID" : "runName",
+            "value" : "test run name"
+        },
+        {
+            "ID" : "runDate",
+            "value" : "10/31/2026"
+        },
+        {
+            "ID" : "documentHeader",
+            "value" : "Electronic Batch Record"
+        }
+    ]
+}
