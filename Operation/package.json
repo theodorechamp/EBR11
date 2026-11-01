@@ -12,6 +12,10 @@
   "dependencies": {
     "node-opcua": "^2.182.2",
     "pg": "^8.23.1",
+    "puppeteer": "^25.16.0",
     "yocto-queue": "^1.2.2"
+  },
+  "allowScripts": {
+    "puppeteer@25.16.0": true
   }
 }

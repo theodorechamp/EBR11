@@ -1,0 +1,13 @@
+{
+    "PDFConfigurations" : [
+        {
+            "ID"  : 0,
+            "name" : "MainPDF",
+            "fileNameFormat" : "MainPDF.pdf",
+            "HTMLFormatFile" : "./HTMLFormats/MainPDFFormat.html",
+            "outputLocation" : "./EBRoutputs/"
+        }
+    ]
+
+
+}

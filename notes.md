@@ -30,16 +30,28 @@ Currently all configuration happens via configuration files and the user respons
 
 ## Configuration
 
-### Required Tags
+### OPC UA Tags
+
+#### Required Tags
 
 There are only a few required tags, they are mostly "trigger" tags. Trigger tags are special tags that are all boolean tags that when a rising edge is detected the system takes an action.
 
-#### Required Tags:
+##### Required Tags:
 
 - start_batch (Boolean)
 - end_batch (Boolean)
 
-### Custom Tags
+#### Custom Tags
+
+### PDF Markdown
+
+The output PDF is created using an HTML file to define the formating for this PDF. The npm package puppeteer is used to render this HTML into a PDF and save the output.
+
+
+
+
+
+
 
 
 
